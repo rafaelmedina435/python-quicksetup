@@ -1,0 +1,8 @@
+# Requirements para Entorno Virtual Global
+# Paquetes básicos para desarrollo Python general
+
+# Análisis de datos básico
+pandas>=2.0.0
+
+# Utilidades básicas
+pathlib2>=2.3.0

@@ -1,0 +1,8 @@
+# Requirements para Proyecto Básico
+# Paquetes esenciales para comenzar con Python
+
+# Análisis de datos básico
+pandas>=2.0.0
+
+# Utilidades adicionales
+pathlib2>=2.3.0
