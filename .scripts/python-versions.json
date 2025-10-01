@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "last_updated": "2025-10-01",
+    "approved_by": "Development Team",
+    "next_review": "2026-04-01",
+    "policy": "Fixed versions for standardization across deployments",
+    "update_schedule": "Review every 6 months (April and October)",
+    "notes": "These versions are intentionally fixed to ensure all machines get identical Python installations"
+  },
+  "versions": {
+    "1": {
+      "version": "3.11.10",
+      "url": "https://www.python.org/ftp/python/3.11.10/python-3.11.10-amd64.exe",
+      "folder": "Python311",
+      "status": "recommended",
+      "label_es": "Recomendada - Producción estable (EOL: Oct 2027)",
+      "label_en": "Recommended - Stable production (EOL: Oct 2027)",
+      "eol": "2027-10-31",
+      "warning": false,
+      "description_es": "Mejor opción para la mayoría de equipos (80% de casos)",
+      "description_en": "Best choice for most teams (80% of cases)"
+    },
+    "2": {
+      "version": "3.12.7",
+      "url": "https://www.python.org/ftp/python/3.12.7/python-3.12.7-amd64.exe",
+      "folder": "Python312",
+      "status": "stable",
+      "label_es": "Moderna - Estable (EOL: Oct 2028)",
+      "label_en": "Modern - Stable (EOL: Oct 2028)",
+      "eol": "2028-10-31",
+      "warning": false,
+      "description_es": "Últimas características estables + mejor rendimiento",
+      "description_en": "Latest stable features + better performance"
+    },
+    "3": {
+      "version": "3.10.15",
+      "url": "https://www.python.org/ftp/python/3.10.15/python-3.10.15-amd64.exe",
+      "folder": "Python310",
+      "status": "mature",
+      "label_es": "Madura - Compatibilidad legacy (EOL: Oct 2026)",
+      "label_en": "Mature - Legacy compatible (EOL: Oct 2026)",
+      "eol": "2026-10-31",
+      "warning": false,
+      "description_es": "Para proyectos conservadores o migración desde versiones antiguas",
+      "description_en": "For conservative projects or migration from older versions"
+    },
+    "4": {
+      "version": "3.13.0",
+      "url": "https://www.python.org/ftp/python/3.13.0/python-3.13.0-amd64.exe",
+      "folder": "Python313",
+      "status": "experimental",
+      "label_es": "Experimental - Más reciente (EOL: Oct 2029)",
+      "label_en": "Experimental - Latest (EOL: Oct 2029)",
+      "eol": "2029-10-31",
+      "warning": true,
+      "description_es": "Solo para desarrollo/testing. NO recomendado para producción",
+      "description_en": "Development/testing only. NOT recommended for production"
+    }
+  }
+}

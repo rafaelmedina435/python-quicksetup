@@ -616,50 +616,92 @@ do {
             }
             
             # ============================================================
-            # VERSIONES FIJAS PARA ESTANDARIZACIÓN
-            # Estas versiones NO se actualizan automáticamente.
-            # Para garantizar que todas las máquinas tengan la misma versión,
-            # solo actualizar manualmente cuando el equipo lo acuerde.
-            # Última revisión: 2024-10-01
+            # VERSIONES DE PYTHON - Lectura desde JSON o Hardcodeadas
+            # Intenta leer desde python-versions.json primero
+            # Si falla, usa versiones hardcodeadas como fallback
             # ============================================================
-            # Definir versiones dinamicamente / Define versions dynamically
-            $pythonVersions = @{
-                "1" = @{
-                    "version" = "3.11.10"
-                    "url" = "https://www.python.org/ftp/python/3.11.10/python-3.11.10-amd64.exe"
-                    "folder" = "Python311"
-                    "status" = "recommended"
-                    "label_es" = "Recomendada (EOL: Oct 2027)"
-                    "label_en" = "Recommended (EOL: Oct 2027)"
-                    "eol" = "2027-10-31"
+
+            # Intentar leer versiones desde JSON
+            $jsonPath = Join-Path $PSScriptRoot "python-versions.json"
+            $pythonVersions = @{}
+            $useJsonVersions = $false
+
+            if (Test-Path $jsonPath) {
+                try {
+                    $jsonContent = Get-Content $jsonPath -Raw -ErrorAction Stop | ConvertFrom-Json
+
+                    # Convertir JSON a hashtable de PowerShell
+                    foreach ($key in $jsonContent.versions.PSObject.Properties.Name) {
+                        $ver = $jsonContent.versions.$key
+                        $pythonVersions[$key] = @{
+                            "version" = $ver.version
+                            "url" = $ver.url
+                            "folder" = $ver.folder
+                            "status" = $ver.status
+                            "label_es" = $ver.label_es
+                            "label_en" = $ver.label_en
+                            "eol" = $ver.eol
+                            "warning" = $ver.warning
+                        }
+                    }
+                    $useJsonVersions = $true
+                    Write-Host "Versiones cargadas desde python-versions.json" -ForegroundColor Green
                 }
-                "2" = @{
-                    "version" = "3.12.7"
-                    "url" = "https://www.python.org/ftp/python/3.12.7/python-3.12.7-amd64.exe"
-                    "folder" = "Python312"
-                    "status" = "stable"
-                    "label_es" = "Moderna - Estable (EOL: Oct 2028)"
-                    "label_en" = "Modern - Stable (EOL: Oct 2028)"
-                    "eol" = "2028-10-31"
+                catch {
+                    Write-Host "Error leyendo python-versions.json, usando versiones hardcodeadas" -ForegroundColor Yellow
                 }
-                "3" = @{
-                    "version" = "3.10.15"
-                    "url" = "https://www.python.org/ftp/python/3.10.15/python-3.10.15-amd64.exe"
-                    "folder" = "Python310"
-                    "status" = "lts"
-                    "label_es" = "LTS - Conservadora (EOL: Oct 2026)"
-                    "label_en" = "LTS - Conservative (EOL: Oct 2026)"
-                    "eol" = "2026-10-31"
-                }
-                "4" = @{
-                    "version" = "3.13.0"
-                    "url" = "https://www.python.org/ftp/python/3.13.0/python-3.13.0-amd64.exe"
-                    "folder" = "Python313"
-                    "status" = "experimental"
-                    "label_es" = "Experimental - Más reciente (EOL: Oct 2029)"
-                    "label_en" = "Experimental - Latest (EOL: Oct 2029)"
-                    "eol" = "2029-10-31"
-                    "warning" = $true
+            }
+
+            # Fallback: Versiones hardcodeadas si JSON no está disponible
+            if (-not $useJsonVersions) {
+                # ============================================================
+                # VERSIONES FIJAS PARA ESTANDARIZACIÓN (FALLBACK)
+                # Estas versiones NO se actualizan automáticamente.
+                # Para garantizar que todas las máquinas tengan la misma versión,
+                # solo actualizar manualmente cuando el equipo lo acuerde.
+                # Última revisión: 2024-10-01
+                # ============================================================
+                $pythonVersions = @{
+                    "1" = @{
+                        "version" = "3.11.10"
+                        "url" = "https://www.python.org/ftp/python/3.11.10/python-3.11.10-amd64.exe"
+                        "folder" = "Python311"
+                        "status" = "recommended"
+                        "label_es" = "Recomendada - Producción estable (EOL: Oct 2027)"
+                        "label_en" = "Recommended - Stable production (EOL: Oct 2027)"
+                        "eol" = "2027-10-31"
+                        "warning" = $false
+                    }
+                    "2" = @{
+                        "version" = "3.12.7"
+                        "url" = "https://www.python.org/ftp/python/3.12.7/python-3.12.7-amd64.exe"
+                        "folder" = "Python312"
+                        "status" = "stable"
+                        "label_es" = "Moderna - Estable (EOL: Oct 2028)"
+                        "label_en" = "Modern - Stable (EOL: Oct 2028)"
+                        "eol" = "2028-10-31"
+                        "warning" = $false
+                    }
+                    "3" = @{
+                        "version" = "3.10.15"
+                        "url" = "https://www.python.org/ftp/python/3.10.15/python-3.10.15-amd64.exe"
+                        "folder" = "Python310"
+                        "status" = "mature"
+                        "label_es" = "Madura - Compatibilidad legacy (EOL: Oct 2026)"
+                        "label_en" = "Mature - Legacy compatible (EOL: Oct 2026)"
+                        "eol" = "2026-10-31"
+                        "warning" = $false
+                    }
+                    "4" = @{
+                        "version" = "3.13.0"
+                        "url" = "https://www.python.org/ftp/python/3.13.0/python-3.13.0-amd64.exe"
+                        "folder" = "Python313"
+                        "status" = "experimental"
+                        "label_es" = "Experimental - Más reciente (EOL: Oct 2029)"
+                        "label_en" = "Experimental - Latest (EOL: Oct 2029)"
+                        "eol" = "2029-10-31"
+                        "warning" = $true
+                    }
                 }
             }
 
