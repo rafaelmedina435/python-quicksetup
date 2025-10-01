@@ -250,6 +250,10 @@ $messages = @{
         "installation_skipped" = "Instalacion omitida"
         "installation_completed" = "Instalacion completada exitosamente"
         "no_previous_python_auto_path" = "No se encontraron versiones anteriores de Python. Estableciendo automaticamente como Python principal en PATH..."
+        "experimental_warning" = "ADVERTENCIA: Python 3.13.0 es muy reciente (octubre 2024)"
+        "experimental_warning_2" = "Algunas librerias pueden no ser compatibles todavia"
+        "experimental_warning_3" = "Recomendado solo para desarrollo/testing, NO para produccion"
+        "experimental_continue" = "Deseas continuar con la instalacion? (s/n)"
     }
     "en" = @{
         "title" = "=== PYTHON QUICK SETUP ==="
@@ -459,6 +463,10 @@ $messages = @{
         "installation_skipped" = "Installation skipped"
         "installation_completed" = "Installation completed successfully"
         "no_previous_python_auto_path" = "No previous Python versions found. Automatically setting as main Python in PATH..."
+        "experimental_warning" = "WARNING: Python 3.13.0 is very recent (October 2024)"
+        "experimental_warning_2" = "Some libraries may not be compatible yet"
+        "experimental_warning_3" = "Recommended only for development/testing, NOT for production"
+        "experimental_continue" = "Do you want to continue with installation? (y/n)"
     }
 }
 
@@ -607,39 +615,51 @@ do {
                 Write-Host "  $(Get-LocalizedText "no_python_versions_found")" -ForegroundColor Red
             }
             
+            # ============================================================
+            # VERSIONES FIJAS PARA ESTANDARIZACIÓN
+            # Estas versiones NO se actualizan automáticamente.
+            # Para garantizar que todas las máquinas tengan la misma versión,
+            # solo actualizar manualmente cuando el equipo lo acuerde.
+            # Última revisión: 2024-10-01
+            # ============================================================
             # Definir versiones dinamicamente / Define versions dynamically
             $pythonVersions = @{
                 "1" = @{
-                    "version" = "3.10.11"
-                    "url" = "https://www.python.org/ftp/python/3.10.11/python-3.10.11-amd64.exe"
-                    "folder" = "Python310"
-                    "status" = "stable"
-                    "label_es" = "LTS - Estable"
-                    "label_en" = "LTS - Stable"
-                }
-                "2" = @{
-                    "version" = "3.11.9"
-                    "url" = "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
+                    "version" = "3.11.10"
+                    "url" = "https://www.python.org/ftp/python/3.11.10/python-3.11.10-amd64.exe"
                     "folder" = "Python311"
                     "status" = "recommended"
-                    "label_es" = "Recomendada"
-                    "label_en" = "Recommended"
+                    "label_es" = "Recomendada (EOL: Oct 2027)"
+                    "label_en" = "Recommended (EOL: Oct 2027)"
+                    "eol" = "2027-10-31"
                 }
-                "3" = @{
-                    "version" = "3.12.9"
-                    "url" = "https://www.python.org/ftp/python/3.12.9/python-3.12.9-amd64.exe"
+                "2" = @{
+                    "version" = "3.12.7"
+                    "url" = "https://www.python.org/ftp/python/3.12.7/python-3.12.7-amd64.exe"
                     "folder" = "Python312"
                     "status" = "stable"
-                    "label_es" = "Estable"
-                    "label_en" = "Stable"
+                    "label_es" = "Moderna - Estable (EOL: Oct 2028)"
+                    "label_en" = "Modern - Stable (EOL: Oct 2028)"
+                    "eol" = "2028-10-31"
+                }
+                "3" = @{
+                    "version" = "3.10.15"
+                    "url" = "https://www.python.org/ftp/python/3.10.15/python-3.10.15-amd64.exe"
+                    "folder" = "Python310"
+                    "status" = "lts"
+                    "label_es" = "LTS - Conservadora (EOL: Oct 2026)"
+                    "label_en" = "LTS - Conservative (EOL: Oct 2026)"
+                    "eol" = "2026-10-31"
                 }
                 "4" = @{
                     "version" = "3.13.0"
                     "url" = "https://www.python.org/ftp/python/3.13.0/python-3.13.0-amd64.exe"
                     "folder" = "Python313"
-                    "status" = "latest"
-                    "label_es" = "Mas reciente"
-                    "label_en" = "Latest"
+                    "status" = "experimental"
+                    "label_es" = "Experimental - Más reciente (EOL: Oct 2029)"
+                    "label_en" = "Experimental - Latest (EOL: Oct 2029)"
+                    "eol" = "2029-10-31"
+                    "warning" = $true
                 }
             }
 
@@ -658,6 +678,22 @@ do {
 
             if ($pythonVersions.ContainsKey($versionChoice)) {
                 $selectedPython = $pythonVersions[$versionChoice]
+
+                # Mostrar advertencia si es una version experimental
+                # Show warning if it's an experimental version
+                if ($selectedPython.ContainsKey("warning") -and $selectedPython.warning) {
+                    Write-Host "`n$(Get-LocalizedText "experimental_warning")" -ForegroundColor Yellow
+                    Write-Host "$(Get-LocalizedText "experimental_warning_2")" -ForegroundColor Yellow
+                    Write-Host "$(Get-LocalizedText "experimental_warning_3")" -ForegroundColor Red
+                    Write-Host ""
+                    $continueExperimental = Read-Host "$(Get-LocalizedText "experimental_continue")"
+                    if ($continueExperimental -ne "s" -and $continueExperimental -ne "S" -and $continueExperimental -ne "y" -and $continueExperimental -ne "Y") {
+                        Write-Host "$(Get-LocalizedText "installation_cancelled")" -ForegroundColor Yellow
+                        Read-Host "`n$(Get-LocalizedText "press_enter")"
+                        Clear-Host
+                        continue
+                    }
+                }
 
                 # Verificar si Python ya esta instalado / Check if Python is already installed
                 $installDir = "$env:LOCALAPPDATA\Programs\Python\$($selectedPython.folder)"
