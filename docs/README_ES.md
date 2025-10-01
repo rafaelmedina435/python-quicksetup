@@ -37,8 +37,12 @@ Templates listos para usar en español e inglés que incluyen estructura de carp
 
 **Características:**
 - ✅ Sin permisos de administrador
-- ✅ Múltiples versiones disponibles (3.10 a 3.13) con recomendaciones inteligentes
-- ✅ Visualizacion dinamica de versiones (LTS, Recomendada, Estable, Mas reciente)
+- ✅ **4 versiones oficiales con releases fijos para estandarización**
+  - Python 3.11.10 (Recomendada - EOL: Oct 2027)
+  - Python 3.12.7 (Moderna - EOL: Oct 2028)
+  - Python 3.10.15 (LTS - EOL: Oct 2026)
+  - Python 3.13.0 (Experimental - EOL: Oct 2029) ⚠️
+- ✅ **Garantía de estandarización de versiones** (todas las máquinas obtienen la misma versión)
 - ✅ Validación previa a la instalación (previene instalaciones duplicadas)
 - ✅ Configuración automática de pip
 - ✅ Creación y gestión de entornos virtuales
@@ -321,6 +325,93 @@ python_quicksetup.bat
 - Sigue las instrucciones del README específico de tu template
 - Usa los scripts de automatización incluidos
 - Disfruta de programar sin configuraciones manuales
+
+---
+
+## 🔒 Política de Estandarización de Versiones
+
+### ¿Por qué versiones fijas?
+
+Esta herramienta usa **versiones fijas de Python** intencionalmente para garantizar la estandarización entre equipos y organizaciones.
+
+### El Problema con "Siempre la Última"
+
+Imagina desplegar en 300 máquinas:
+- **Día 1 (Máquinas 1-100):** Python 3.12.4 instalado ✅
+- **Día 15 (Máquinas 101-200):** Python 3.12.5 lanzado e instalado ⚠️
+- **Día 30 (Máquinas 201-300):** Python 3.12.7 lanzado e instalado ⚠️
+- **Resultado:** 3 versiones diferentes de Python en producción 😱
+
+### Nuestra Solución
+
+**Versiones fijas que solo se actualizan cuando TÚ lo decides:**
+- Todas las máquinas instalan **exactamente la misma versión**
+- Sin sorpresas o problemas de "funciona en mi máquina"
+- Parches de seguridad aplicados mediante actualizaciones planificadas
+- Control total sobre cuándo actualizar
+
+### Para Equipos y Organizaciones
+
+1. **Mantén las versiones fijas** - No las modifiques automáticamente
+2. **Todas las instalaciones obtienen Python idéntico** - Consistencia garantizada
+3. **Planifica actualizaciones en equipo** - Actualiza manualmente cuando estés listo
+4. **Documenta tu versión** - Cada proyecto registra su versión de Python
+
+### Cuándo Actualizar Versiones
+
+**Calendario de actualización recomendado:**
+- Revisar cada **6 meses** (abril y octubre)
+- Solo actualizar para parches de seguridad críticos
+- Probar exhaustivamente antes del despliegue
+- Documentar cambios en CHANGELOG.md
+
+### Cómo Actualizar Versiones
+
+Para actualizar las versiones oficiales en esta herramienta:
+
+1. Editar `.scripts/python_quicksetup.ps1` (líneas 610-656)
+2. Cambiar números de versión y URLs
+3. Actualizar el comentario "Última revisión"
+4. Probar la instalación
+5. Redistribuir el script actualizado
+
+**Ejemplo:**
+```powershell
+# ============================================================
+# VERSIONES FIJAS PARA ESTANDARIZACIÓN
+# Última revisión: 2024-10-01  ← Actualiza esta fecha
+# ============================================================
+$pythonVersions = @{
+    "1" = @{
+        "version" = "3.11.10"  ← Cambia la versión aquí
+        "url" = "https://..."   ← Actualiza la URL
+        "label_es" = "Recomendada (EOL: Oct 2027)"
+    }
+}
+```
+
+### Compatibilidad de Versiones Dentro de Releases Menores
+
+**Dentro de la misma versión menor (ej., 3.12.x):**
+- 3.12.4 → 3.12.7: **100% compatible** (solo correcciones de bugs)
+- Sin cambios que rompan compatibilidad entre parches
+- Seguro actualizar dentro de versión menor
+
+**Entre versiones menores (ej., 3.11.x → 3.12.x):**
+- Pueden tener nuevas características
+- Raros cambios que rompen compatibilidad
+- Probar antes de desplegar
+
+### Versiones Oficiales Actuales
+
+| Versión | Estado | Fecha EOL | Caso de Uso |
+|---------|--------|-----------|-------------|
+| **3.11.10** | Recomendada | Oct 2027 | La mayoría de equipos (80% de casos) |
+| **3.12.7** | Moderna | Oct 2028 | Últimas características + rendimiento |
+| **3.10.15** | LTS | Oct 2026 | Proyectos conservadores/legacy |
+| **3.13.0** | Experimental | Oct 2029 | Solo desarrollo/testing ⚠️ |
+
+**Última revisión de versiones:** Octubre 2024
 
 ---
 

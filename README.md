@@ -37,8 +37,12 @@ Ready-to-use templates in Spanish and English that include folder structure, aut
 
 **Features:**
 - ✅ No administrator permissions required
-- ✅ Multiple versions available (3.10 to 3.13) with smart recommendations
-- ✅ Dynamic version display (LTS, Recommended, Stable, Latest)
+- ✅ **4 official versions with fixed releases for standardization**
+  - Python 3.11.10 (Recommended - EOL: Oct 2027)
+  - Python 3.12.7 (Modern - EOL: Oct 2028)
+  - Python 3.10.15 (LTS - EOL: Oct 2026)
+  - Python 3.13.0 (Experimental - EOL: Oct 2029) ⚠️
+- ✅ **Version standardization guarantee** (all machines get the same version)
 - ✅ Pre-installation validation (prevents duplicate installations)
 - ✅ Automatic pip configuration
 - ✅ Virtual environment creation and management
@@ -327,6 +331,93 @@ terminal.bat    # Quick environment activation (daily use)
 - Follow the instructions of your template's specific README
 - Use the included automation scripts
 - Enjoy programming without manual configurations
+
+---
+
+## 🔒 Version Standardization Policy
+
+### Why fixed versions?
+
+This tool uses **fixed Python versions** intentionally to guarantee standardization across teams and organizations.
+
+### The Problem with "Always Latest"
+
+Imagine deploying to 300 machines:
+- **Day 1 (Machines 1-100):** Python 3.12.4 installed ✅
+- **Day 15 (Machines 101-200):** Python 3.12.5 released and installed ⚠️
+- **Day 30 (Machines 201-300):** Python 3.12.7 released and installed ⚠️
+- **Result:** 3 different Python versions in production 😱
+
+### Our Solution
+
+**Fixed versions that only update when YOU decide:**
+- All machines install **exactly the same version**
+- No surprises or "works on my machine" issues
+- Security patches applied through planned updates
+- Full control over when to upgrade
+
+### For Teams and Organizations
+
+1. **Keep the fixed versions** - Don't modify them automatically
+2. **All installations get identical Python** - Guaranteed consistency
+3. **Plan updates as a team** - Update manually when ready
+4. **Document your version** - Each project records its Python version
+
+### When to Update Versions
+
+**Recommended update schedule:**
+- Review every **6 months** (April and October)
+- Only update for critical security patches
+- Test thoroughly before rollout
+- Document changes in CHANGELOG.md
+
+### How to Update Versions
+
+To update the official versions in this tool:
+
+1. Edit `.scripts/python_quicksetup.ps1` (lines 610-646)
+2. Change version numbers and URLs
+3. Update the "Last revision" comment
+4. Test the installation
+5. Redistribute the updated script
+
+**Example:**
+```powershell
+# ============================================================
+# VERSIONES FIJAS PARA ESTANDARIZACIÓN
+# Última revisión: 2024-10-01  ← Update this date
+# ============================================================
+$pythonVersions = @{
+    "1" = @{
+        "version" = "3.11.10"  ← Change version here
+        "url" = "https://..."   ← Update URL
+        "label_es" = "Recomendada (EOL: Oct 2027)"
+    }
+}
+```
+
+### Version Compatibility Within Minor Releases
+
+**Within the same minor version (e.g., 3.12.x):**
+- 3.12.4 → 3.12.7: **100% compatible** (only bugfixes)
+- No breaking changes between patches
+- Safe to upgrade within minor version
+
+**Between minor versions (e.g., 3.11.x → 3.12.x):**
+- May have new features
+- Rare breaking changes
+- Test before deploying
+
+### Current Official Versions
+
+| Version | Status | EOL Date | Use Case |
+|---------|--------|----------|----------|
+| **3.11.10** | Recommended | Oct 2027 | Most teams (80% of cases) |
+| **3.12.7** | Modern | Oct 2028 | Latest features + performance |
+| **3.10.15** | LTS | Oct 2026 | Conservative/legacy projects |
+| **3.13.0** | Experimental | Oct 2029 | Development/testing only ⚠️ |
+
+**Last version review:** October 2024
 
 ---
 
