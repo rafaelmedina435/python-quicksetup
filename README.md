@@ -373,28 +373,39 @@ Imagine deploying to 300 machines:
 
 ### How to Update Versions
 
-To update the official versions in this tool:
+**Method 1: Update JSON file** (Recommended) ⭐
 
-1. Edit `.scripts/python_quicksetup.ps1` (lines 610-646)
-2. Change version numbers and URLs
-3. Update the "Last revision" comment
+1. Edit `.scripts/python-versions.json`
+2. Update version numbers, URLs, and labels
+3. Update `metadata.last_updated` date
 4. Test the installation
-5. Redistribute the updated script
+5. Commit changes to Git
 
 **Example:**
-```powershell
-# ============================================================
-# VERSIONES FIJAS PARA ESTANDARIZACIÓN
-# Última revisión: 2024-10-01  ← Update this date
-# ============================================================
-$pythonVersions = @{
-    "1" = @{
-        "version" = "3.11.10"  ← Change version here
-        "url" = "https://..."   ← Update URL
-        "label_es" = "Recomendada (EOL: Oct 2027)"
+```json
+{
+  "metadata": {
+    "last_updated": "2024-10-01",  ← Update this date
+    "next_review": "2025-04-01"
+  },
+  "versions": {
+    "1": {
+      "version": "3.11.10",  ← Change version here
+      "url": "https://...",  ← Update URL
+      "label_es": "Recomendada - Producción estable (EOL: Oct 2027)"
     }
+  }
 }
 ```
+
+**Method 2: Update PowerShell script** (Fallback)
+
+If `python-versions.json` is not available, edit `.scripts/python_quicksetup.ps1` (lines 665-705)
+
+**Centralized Management:**
+- Keep `python-versions.json` in Git repository
+- Can be hosted on internal server for enterprise deployments
+- Script automatically falls back to hardcoded versions if JSON is missing
 
 ### Version Compatibility Within Minor Releases
 
@@ -412,10 +423,10 @@ $pythonVersions = @{
 
 | Version | Status | EOL Date | Use Case |
 |---------|--------|----------|----------|
-| **3.11.10** | Recommended | Oct 2027 | Most teams (80% of cases) |
-| **3.12.7** | Modern | Oct 2028 | Latest features + performance |
-| **3.10.15** | LTS | Oct 2026 | Conservative/legacy projects |
-| **3.13.0** | Experimental | Oct 2029 | Development/testing only ⚠️ |
+| **3.11.10** | Recommended - Stable production | Oct 2027 | Most teams (80% of cases) |
+| **3.12.7** | Modern - Stable | Oct 2028 | Latest features + performance |
+| **3.10.15** | Mature - Legacy compatible | Oct 2026 | Older projects / migration |
+| **3.13.0** | Experimental - Latest | Oct 2029 | Development/testing only ⚠️ |
 
 **Last version review:** October 2024
 

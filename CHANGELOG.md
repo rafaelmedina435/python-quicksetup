@@ -9,18 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Version standardization policy** for enterprise/team deployments
+- **Centralized version management with JSON file** (`.scripts/python-versions.json`)
+  - Easier version updates without editing PowerShell code
+  - Supports Git versioning for version control
+  - Can be hosted on internal servers for enterprise deployments
+  - Automatic fallback to hardcoded versions if JSON is missing
 - End-of-Life (EOL) dates in version labels for better planning
 - Comprehensive documentation section about version standardization
 - Explanatory comments in code about fixed version strategy
 - Version update schedule recommendation (6-month review cycle)
-- Detailed guide on how to update official versions
+- Detailed guide on how to update official versions (JSON method + PowerShell fallback)
 
 ### Changed
 - **Updated to 4 official Python versions** with clear categorization
-  - Python 3.11.10 (Recommended - Primary choice for 80% of teams)
-  - Python 3.12.7 (Modern - Latest stable features)
-  - Python 3.10.15 (LTS - Conservative/legacy projects)
-  - Python 3.13.0 (Experimental - Development/testing only) ⚠️
+  - Python 3.11.10 (Recommended - Stable production)
+  - Python 3.12.7 (Modern - Stable)
+  - Python 3.10.15 (Mature - Legacy compatible)
+  - Python 3.13.0 (Experimental - Latest) ⚠️
+- **Improved version labels** for better clarity
+  - Removed incorrect "LTS" terminology (Python doesn't have official LTS)
+  - Added descriptive labels based on maturity and use case
+  - Clearer guidance for users choosing versions
 - **Reordered versions** to show recommended version first
 - Updated version labels to include EOL dates
 - Improved version descriptions with use case guidance

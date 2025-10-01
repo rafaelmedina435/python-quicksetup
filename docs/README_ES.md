@@ -367,28 +367,39 @@ Imagina desplegar en 300 máquinas:
 
 ### Cómo Actualizar Versiones
 
-Para actualizar las versiones oficiales en esta herramienta:
+**Método 1: Actualizar archivo JSON** (Recomendado) ⭐
 
-1. Editar `.scripts/python_quicksetup.ps1` (líneas 610-656)
-2. Cambiar números de versión y URLs
-3. Actualizar el comentario "Última revisión"
+1. Editar `.scripts/python-versions.json`
+2. Actualizar números de versión, URLs y etiquetas
+3. Actualizar fecha en `metadata.last_updated`
 4. Probar la instalación
-5. Redistribuir el script actualizado
+5. Hacer commit de los cambios en Git
 
 **Ejemplo:**
-```powershell
-# ============================================================
-# VERSIONES FIJAS PARA ESTANDARIZACIÓN
-# Última revisión: 2024-10-01  ← Actualiza esta fecha
-# ============================================================
-$pythonVersions = @{
-    "1" = @{
-        "version" = "3.11.10"  ← Cambia la versión aquí
-        "url" = "https://..."   ← Actualiza la URL
-        "label_es" = "Recomendada (EOL: Oct 2027)"
+```json
+{
+  "metadata": {
+    "last_updated": "2024-10-01",  ← Actualiza esta fecha
+    "next_review": "2025-04-01"
+  },
+  "versions": {
+    "1": {
+      "version": "3.11.10",  ← Cambia la versión aquí
+      "url": "https://...",  ← Actualiza la URL
+      "label_es": "Recomendada - Producción estable (EOL: Oct 2027)"
     }
+  }
 }
 ```
+
+**Método 2: Actualizar script PowerShell** (Fallback)
+
+Si `python-versions.json` no está disponible, editar `.scripts/python_quicksetup.ps1` (líneas 665-705)
+
+**Gestión Centralizada:**
+- Mantener `python-versions.json` en repositorio Git
+- Puede alojarse en servidor interno para despliegues empresariales
+- El script automáticamente usa versiones hardcodeadas si falta el JSON
 
 ### Compatibilidad de Versiones Dentro de Releases Menores
 
@@ -406,10 +417,10 @@ $pythonVersions = @{
 
 | Versión | Estado | Fecha EOL | Caso de Uso |
 |---------|--------|-----------|-------------|
-| **3.11.10** | Recomendada | Oct 2027 | La mayoría de equipos (80% de casos) |
-| **3.12.7** | Moderna | Oct 2028 | Últimas características + rendimiento |
-| **3.10.15** | LTS | Oct 2026 | Proyectos conservadores/legacy |
-| **3.13.0** | Experimental | Oct 2029 | Solo desarrollo/testing ⚠️ |
+| **3.11.10** | Recomendada - Producción estable | Oct 2027 | La mayoría de equipos (80% de casos) |
+| **3.12.7** | Moderna - Estable | Oct 2028 | Últimas características + rendimiento |
+| **3.10.15** | Madura - Compatibilidad legacy | Oct 2026 | Proyectos antiguos / migración |
+| **3.13.0** | Experimental - Más reciente | Oct 2029 | Solo desarrollo/testing ⚠️ |
 
 **Última revisión de versiones:** Octubre 2024
 
