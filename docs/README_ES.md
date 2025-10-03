@@ -38,9 +38,9 @@ Templates listos para usar en español e inglés que incluyen estructura de carp
 **Características:**
 - ✅ Sin permisos de administrador
 - ✅ **4 versiones oficiales con releases fijos para estandarización**
-  - Python 3.11.10 (Recomendada - EOL: Oct 2027)
+  - Python 3.11.9 (Recomendada - EOL: Oct 2027)
   - Python 3.12.7 (Moderna - EOL: Oct 2028)
-  - Python 3.10.15 (LTS - EOL: Oct 2026)
+  - Python 3.10.11 (LTS - EOL: Oct 2026)
   - Python 3.13.0 (Experimental - EOL: Oct 2029) ⚠️
 - ✅ **Garantía de estandarización de versiones** (todas las máquinas obtienen la misma versión)
 - ✅ Validación previa a la instalación (previene instalaciones duplicadas)
@@ -384,7 +384,7 @@ Imagina desplegar en 300 máquinas:
   },
   "versions": {
     "1": {
-      "version": "3.11.10",  ← Cambia la versión aquí
+      "version": "3.11.9",  ← Cambia la versión aquí
       "url": "https://...",  ← Actualiza la URL
       "label_es": "Recomendada - Producción estable (EOL: Oct 2027)"
     }
@@ -417,9 +417,9 @@ Si `python-versions.json` no está disponible, editar `.scripts/python_quicksetu
 
 | Versión | Estado | Fecha EOL | Caso de Uso |
 |---------|--------|-----------|-------------|
-| **3.11.10** | Recomendada - Producción estable | Oct 2027 | La mayoría de equipos (80% de casos) |
+| **3.11.9** | Recomendada - Producción estable | Oct 2027 | La mayoría de equipos (80% de casos) |
 | **3.12.7** | Moderna - Estable | Oct 2028 | Últimas características + rendimiento |
-| **3.10.15** | Madura - Compatibilidad legacy | Oct 2026 | Proyectos antiguos / migración |
+| **3.10.11** | Madura - Compatibilidad legacy | Oct 2026 | Proyectos antiguos / migración |
 | **3.13.0** | Experimental - Más reciente | Oct 2029 | Solo desarrollo/testing ⚠️ |
 
 **Última revisión de versiones:** Octubre 2024

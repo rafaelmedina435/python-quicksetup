@@ -38,9 +38,9 @@ Ready-to-use templates in Spanish and English that include folder structure, aut
 **Features:**
 - ✅ No administrator permissions required
 - ✅ **4 official versions with fixed releases for standardization**
-  - Python 3.11.10 (Recommended - EOL: Oct 2027)
+  - Python 3.11.9 (Recommended - EOL: Oct 2027)
   - Python 3.12.7 (Modern - EOL: Oct 2028)
-  - Python 3.10.15 (LTS - EOL: Oct 2026)
+  - Python 3.10.11 (LTS - EOL: Oct 2026)
   - Python 3.13.0 (Experimental - EOL: Oct 2029) ⚠️
 - ✅ **Version standardization guarantee** (all machines get the same version)
 - ✅ Pre-installation validation (prevents duplicate installations)
@@ -390,7 +390,7 @@ Imagine deploying to 300 machines:
   },
   "versions": {
     "1": {
-      "version": "3.11.10",  ← Change version here
+      "version": "3.11.9",  ← Change version here
       "url": "https://...",  ← Update URL
       "label_es": "Recomendada - Producción estable (EOL: Oct 2027)"
     }
@@ -423,9 +423,9 @@ If `python-versions.json` is not available, edit `.scripts/python_quicksetup.ps1
 
 | Version | Status | EOL Date | Use Case |
 |---------|--------|----------|----------|
-| **3.11.10** | Recommended - Stable production | Oct 2027 | Most teams (80% of cases) |
+| **3.11.9** | Recommended - Stable production | Oct 2027 | Most teams (80% of cases) |
 | **3.12.7** | Modern - Stable | Oct 2028 | Latest features + performance |
-| **3.10.15** | Mature - Legacy compatible | Oct 2026 | Older projects / migration |
+| **3.10.11** | Mature - Legacy compatible | Oct 2026 | Older projects / migration |
 | **3.13.0** | Experimental - Latest | Oct 2029 | Development/testing only ⚠️ |
 
 **Last version review:** October 2024

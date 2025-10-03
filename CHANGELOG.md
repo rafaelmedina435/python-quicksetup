@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2025-10-03
+
+### Fixed
+- **CRITICAL: Fixed installation failures on Windows**
+  - Updated Python 3.11.10 → 3.11.9 (Windows binary not available for 3.11.10)
+  - Updated Python 3.10.15 → 3.10.11 (Windows binary not available for 3.10.15)
+  - **Root cause**: Python.org does not publish Windows installer (.exe) binaries for all patch versions
+  - **Impact**: Previous versions caused download failures for Windows users
+  - **Solution**: Reverted to latest patch versions with official Windows binaries available
+  - Added clarification in metadata notes about Windows binary requirement
+
+### Technical Details
+- Python stopped publishing Windows binaries (.exe) for certain patch releases (3.11.10+, 3.10.12+)
+- Only source files (.tar.gz, .tgz) are available for these versions, requiring manual compilation
+- Windows users depend exclusively on .exe installers as there's no native package manager for Python
+- Verified all configured versions now have working Windows binaries:
+  - ✅ Python 3.11.9 (last 3.11.x with Windows binary)
+  - ✅ Python 3.12.7 (unchanged)
+  - ✅ Python 3.10.11 (last stable 3.10.x with Windows binary)
+  - ✅ Python 3.13.0 (unchanged)
+
 ## [1.1.0] - 2024-10-01
 
 ### Added
