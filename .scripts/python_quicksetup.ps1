@@ -663,8 +663,8 @@ do {
                 # ============================================================
                 $pythonVersions = @{
                     "1" = @{
-                        "version" = "3.11.10"
-                        "url" = "https://www.python.org/ftp/python/3.11.10/python-3.11.10-amd64.exe"
+                        "version" = "3.11.9"
+                        "url" = "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
                         "folder" = "Python311"
                         "status" = "recommended"
                         "label_es" = "Recomendada - Producción estable (EOL: Oct 2027)"
@@ -683,8 +683,8 @@ do {
                         "warning" = $false
                     }
                     "3" = @{
-                        "version" = "3.10.15"
-                        "url" = "https://www.python.org/ftp/python/3.10.15/python-3.10.15-amd64.exe"
+                        "version" = "3.10.11"
+                        "url" = "https://www.python.org/ftp/python/3.10.11/python-3.10.11-amd64.exe"
                         "folder" = "Python310"
                         "status" = "mature"
                         "label_es" = "Madura - Compatibilidad legacy (EOL: Oct 2026)"
